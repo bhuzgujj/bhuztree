@@ -1,0 +1,50 @@
+[package]
+name = "bhuztree"
+version = "0.0.0"
+description = "A Tauri App"
+authors = ["emile boucher <emileboucheracc@gmail.com"]
+license = "Apache-2.0"
+repository = ""
+edition = "2021"
+rust-version = "1.57"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.2", features = [] }
+
+[dependencies]
+dirs = "4.0.0"
+toml = "0.7.0"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.2", features = ["dialog-all", "shell-open"] }
+chrono = "0.4.23"
+
+# feature = ["chrono-impl"]
+ts-rs = { version = "6.2.1" }
+
+# Error handling
+log = "0.4.17"
+env_logger = "0.10.0"
+error-stack = "0.3.1"
+# githandler = { path = "../githandler" }
+
+# Testing
+test-case = "3.0.0"
+
+# Dot Env
+dotenv = "0.15.0"
+dotenv-enum = "0.2.4"
+
+# Enum iteration
+strum = "0.24.1"
+strum_macros = "0.24.1"
+
+[features]
+# by default Tauri runs in production mode
+# when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL
+default = ["custom-protocol"]
+# this feature is used used for production builds where `devPath` points to the filesystem
+# DO NOT remove this
+custom-protocol = ["tauri/custom-protocol"]

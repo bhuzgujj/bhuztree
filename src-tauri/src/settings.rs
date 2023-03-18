@@ -1,4 +1,3 @@
-use std::num::ParseIntError;
 use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use dotenv_enum::EnvironmentVariable;

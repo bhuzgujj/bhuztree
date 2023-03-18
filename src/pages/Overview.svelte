@@ -4,7 +4,7 @@
 	import RepositorySelector from "../components/overview/RepositorySelector.svelte"
 	import RepositoryOverview from "../components/overview/RepositoryOverview.svelte"
 	import AddLocalRepositoryForm from "../components/overview/AddLocalRepositoryForm.svelte"
-	import AddRepositoryButton from "../components/overview/AddRepositoryButtons.svelte"
+	import CustomButton from "../components/CustomButton.svelte"
 
     $: title = $local.pages.overview
 	$: repo = $repositories[$selectedRepository]
@@ -13,7 +13,7 @@
 <div class="flex flex-col flex-grow">
     <div class="bg-3 rounded-md p-1 mb-1">
         <div class="mr-2">
-            <AddRepositoryButton action={() => {selectedRepository.set("")}}>Add local repos</AddRepositoryButton>
+            <CustomButton styles="save" onclick={() => {selectedRepository.set("")}} selected={$selectedRepository == ""}>Add local repos</CustomButton>
         </div>
     </div>
     <RepositorySelector/>

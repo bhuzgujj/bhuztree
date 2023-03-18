@@ -11,14 +11,8 @@ h1 {
 	font-size: 1.25rem;
 }
 
-button:hover:enabled {
-	background: #ddd;
-	color: #333;
-}
-
 button:active:enabled {
 	transform: scale(0.95);
-	background: #fff;
 }
 
 button:hover img {

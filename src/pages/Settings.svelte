@@ -5,12 +5,11 @@
 	import {debug} from "../global/debug"
 	import {currentPage} from "../routing"
 
-	import SaveControlButton from "../components/SaveControlButton.svelte"
-	import CancelControlButton from "../components/CancelControlButton.svelte"
 	import SettingsSection from "../components/settings/SettingsSection.svelte"
 	import DebugLevelPicker from "../components/settings/DebugLevelPicker.svelte"
 	import LangagePicker from "../components/settings/LanguagePicker.svelte"
 	import type {Settings} from "../backend/types/Settings"
+	import CustomButton from "../components/CustomButton.svelte"
 
 	$: settingsLabel = $local.pages.settings
 	$: generalSectionLabel = $local.components.settings.SettingsSectionsTitles.general
@@ -56,7 +55,7 @@
     </SettingsSection>
 
     <div class="mt-1 flex justify-between items-stretch">
-        <SaveControlButton onclick={save}>{saveLabel}</SaveControlButton>
-        <CancelControlButton onclick={cancel}>{cancelLabel}</CancelControlButton>
+        <CustomButton styles="save" onclick={save}>{saveLabel}</CustomButton>
+        <CustomButton styles="cancel" onclick={cancel}>{cancelLabel}</CustomButton>
     </div>
 </div>

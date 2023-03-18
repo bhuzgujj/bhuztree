@@ -1,8 +1,8 @@
 <script lang="ts">
 	import {repositories, selectedRepository} from "../../global/repositories"
     import type {Repository} from "../../global/repositories"
-	import CancelControlButton from "../CancelControlButton.svelte"
 	import {saveRepositories} from "../../backend/Calls"
+	import CustomButton from "../CustomButton.svelte"
 
     export let repo: Repository
 
@@ -21,7 +21,7 @@
 
 <h1>{$selectedRepository}</h1>
 <div class="flex flex-row">
-    <CancelControlButton onclick={() => {deleteRepository($selectedRepository)}}>Delete</CancelControlButton>
+    <CustomButton styles="cancel" onclick={() => {deleteRepository($selectedRepository)}}>Delete</CustomButton>
 </div>
 <div>
     <h2 class="underline">Branches:</h2>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import NavButton from "../components/CustomButton.svelte"
+	import CustomButton from "../components/CustomButton.svelte"
 	import {local} from "../global/localizations"
 	import {currentPage} from "../routing"
 
@@ -9,16 +9,16 @@
 
 <nav class="flex justify-between items-stretch bg-3 p-1 rounded-md">
     <div>
-        <NavButton onclick={() => currentPage.set("home")} selected={currPage === "home"}>
+        <CustomButton onclick={() => currentPage.set("home")} selected={currPage === "home"}>
             {pagesLabel.home}
-        </NavButton>
-        <NavButton onclick={() => currentPage.set("overview")} selected={currPage === "overview"}>
+        </CustomButton>
+        <CustomButton onclick={() => currentPage.set("overview")} selected={currPage === "overview"}>
             {pagesLabel.overview}
-        </NavButton>
+        </CustomButton>
     </div>
     <div>
-        <NavButton onclick={() => currentPage.set("settings")} selected={currPage === "settings"}>
+        <CustomButton onclick={() => currentPage.set("settings")} selected={currPage === "settings"}>
             {pagesLabel.settings}
-        </NavButton>
+        </CustomButton>
     </div>
 </nav>

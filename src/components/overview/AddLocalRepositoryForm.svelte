@@ -71,13 +71,7 @@
             <img src="https://api.iconify.design/mdi:folder.svg" alt="open"/>
         </CustomButton>
     </div>
-    {#if isInputInvalid(formName, formPath)}
-        <button type="submit" class="rounded-md border-gray-400 px-5 bg-2 my-1" disabled>
-            {addRepository}
-        </button>
-    {:else}
-        <button type="submit" class="rounded-md border-gray-400 px-5 bg-green-700 my-1">
-            {addRepository}
-        </button>
-    {/if}
+    <CustomButton type="submit" styles="save" selected={isInputInvalid(formName, formPath)}>
+        {addRepository}
+    </CustomButton>
 </form>

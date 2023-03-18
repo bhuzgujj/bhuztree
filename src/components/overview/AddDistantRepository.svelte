@@ -8,6 +8,7 @@
     let formPath: string;
     let formName: string;
     let formLink: string;
+	let isLoading = false
 
     $: nameError = !!$repositories[formName] ?
 	    alreadyExist(formName) :
@@ -19,17 +20,20 @@
 
     $: alreadyExist = $local.components.overview.AddLocalRepositoryForm.alreadyExist
 
-    $: isValid = formPath && formName && formLink && !nameError && !pathError;
+    $: isValid = formPath && formName && formLink && !nameError && !pathError && !isLoading;
 
     async function onSubmit() {
 	    try {
-			isValid = false;
+		    isLoading = true
 		    await cloneRepo(formLink, formPath, $repositories, formName)
 		    await getBranch(`${formPath}/${formName}`, $repositories, formName)
 		    formName= null;
 		    formPath= null;
+		    formLink= null;
 	    }  catch (e) {
 		    pathError = `No repository at ${formPath}`
+	    } finally {
+		    isLoading = false
 	    }
     }
 </script>
@@ -42,8 +46,9 @@
             bind:formPath={formPath}
             bind:pathError={pathError}
             bind:isValid
+            bind:isLoading={isLoading}
             onsubmit={onSubmit}
     >
-        <InputWithError error={null} placeholder={"Repository Link"} bind:value={formLink}/>
+        <InputWithError error={null} placeholder={"Repository Link"} bind:value={formLink} bind:disabling={isLoading}/>
     </AddRepositoryForm>
 </div>

@@ -6,6 +6,7 @@
 
     let formPath: string;
     let formName: string;
+    let isLoading = false
 
 	$: nameError = !!$repositories[formName] ?
 	    alreadyExist(formName) :
@@ -21,11 +22,14 @@
 
     async function onSubmit() {
         try {
+	        isLoading = true
 	        await getBranch(formPath, $repositories, formName)
 	        formName= null;
 	        formPath= null;
         }  catch (e) {
 	        pathError = `No repository at ${formPath}`
+        } finally {
+	        isLoading = false
         }
     }
 </script>
@@ -38,6 +42,7 @@
             bind:formPath={formPath}
             bind:pathError={pathError}
             bind:isValid
+            bind:isLoading={isLoading}
             onsubmit={onSubmit}
     />
 </div>

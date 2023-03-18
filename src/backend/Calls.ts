@@ -80,15 +80,7 @@ export async function getBranch(path: string, repos: Repositories, name: string)
 
 export async function cloneRepo(link: string, path: string, repos: Repositories, name: string) {
 	try {
-		const branches = await invoke<{ [key: string]: Branch[] }>("clone_repo", {link, path, name})
-		repositories.set({
-			...repos,
-			[name]: {
-				path: path,
-				branches: branches[path]
-			}
-		})
-		return branches
+		return await invoke<{ [key: string]: Branch[] }>("clone_repo", {link, path, name})
 	} catch (err: any) {
 		return Promise.reject(await logging(err, "Warning"))
 	}

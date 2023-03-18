@@ -13,6 +13,8 @@
 	export let nameError: string | null
 	export let pathError: string | null
 	export let isValid: boolean
+	export let isLoading: boolean = false
+
 	export let onsubmit: () => Promise<void>
 
 	$: namePlaceholder = $local.components.overview.AddLocalRepositoryForm.namePlaceholder
@@ -38,10 +40,10 @@
     <div class="flex flex-col m-1 p-1 bg-4 rounded-md basis-2/3">
         <h1>{title}</h1>
         <form on:submit|preventDefault={addRepo}>
-            <InputWithError error={nameError} placeholder={namePlaceholder} bind:value={formName}/>
+            <InputWithError error={nameError} placeholder={namePlaceholder} bind:value={formName} bind:disabling={isLoading}/>
             <div class="flex flex-row gap-0.5 items-center justify-between">
                 <div class="flex-grow flex flex-col items-stretch">
-                    <InputWithError error={pathError} placeholder={pathPlaceholder} bind:value={formPath}/>
+                    <InputWithError error={pathError} placeholder={pathPlaceholder} bind:value={formPath} bind:disabling={isLoading}/>
                 </div>
                 <div class="flex-grow-0 p-1 flex flex-col items-stretch">
                     <CustomButton onclick={getFolder}>

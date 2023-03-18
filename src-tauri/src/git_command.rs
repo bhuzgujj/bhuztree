@@ -52,6 +52,14 @@ pub fn get_branch(paths: Vec<String>) -> Result<HashMap<String, Vec<Branches>>, 
     }
 }
 
+#[tauri::command]
+pub fn clone_repo(link: String, path: String, name: String) -> Result<HashMap<String, Vec<Branches>>, String> {
+    match send_to_git(GitCommand { command: "clone".to_string(), args: vec!["--bare".to_string(), link, name] }, vec![PathBuf::from(path)]) {
+        Ok(response) => Ok(parse_branches(&response)),
+        Err(err) => Err(err.to_string()),
+    }
+}
+
 fn send_to_git(command: GitCommand, paths: Vec<PathBuf>) -> error_stack::Result<HashMap<String, String>, InvalidCommandError> {
     CliCommand::new(command.command, command.args)
         .execute_catching_stdout(paths)

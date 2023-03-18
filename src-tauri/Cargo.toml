@@ -1,6 +1,6 @@
 [package]
 name = "bhuztree"
-version = "0.0.0"
+version = "0.1.0"
 description = "A Tauri App"
 authors = ["emile boucher <emileboucheracc@gmail.com"]
 license = "Apache-2.0"

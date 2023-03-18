@@ -1,3 +1,3 @@
-export type ButtonStyle = "none" | "cancel" | "save";
+export type ButtonStyle = "none" | "cancel" | "save" | "info";
 
 export type ButtonType = "submit" | "reset" | "button";

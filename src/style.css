@@ -65,3 +65,56 @@ form {
 .bg-1 {
 	background-color: #111;
 }
+
+.clickable-none {
+	background-color: #444;
+	border: #666 2px solid;
+}
+
+.clickable-none:hover:enabled  {
+	background: #ddd;
+	color: #333;
+}
+
+.clickable-none:active:enabled  {
+	background: #fff;
+}
+
+.clickable-cancel {
+	background-color: #400;
+	border: #800 2px solid;
+}
+
+.clickable-cancel:hover:enabled  {
+	background: #d00;
+}
+
+.clickable-cancel:active:enabled  {
+	background: #f66;
+}
+
+.clickable-save {
+	background-color: #040;
+	border: #080 2px solid;
+}
+
+.clickable-save:hover:enabled  {
+	background: #0d0;
+}
+
+.clickable-save:active:enabled  {
+	background: #8f8;
+}
+
+.clickable-info {
+	background-color: #004;
+	border: #008 2px solid;
+}
+
+.clickable-info:hover:enabled  {
+	background: #00d;
+}
+
+.clickable-info:active:enabled  {
+	background: #22f;
+}

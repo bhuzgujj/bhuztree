@@ -62,15 +62,30 @@ export async function saveRepositories(repos: Repositories): Promise<Repositorie
 	}
 }
 
-export async function getBranch(repository: Repository, repos: Repositories, branch: string): Promise<{ [key: string]: Branch[] } | any> {
+export async function getBranch(path: string, repos: Repositories, name: string): Promise<{ [key: string]: Branch[] } | any> {
 	try {
-		const branches = await invoke<{ [key: string]: Branch[] }>("get_branch", {paths: [repository.path]})
+		const branches = await invoke<{ [key: string]: Branch[] }>("get_branch", {paths: [path]})
 		repositories.set({
 			...repos,
-			[branch]: {
-				path: repository.path,
-				selected_branch: repository.selected_branch,
-				branches: branches[repository.path]
+			[name]: {
+				path: path,
+				branches: branches[path]
+			}
+		})
+		return branches
+	} catch (err: any) {
+		return Promise.reject(await logging(err, "Warning"))
+	}
+}
+
+export async function cloneRepo(link: string, path: string, repos: Repositories, name: string) {
+	try {
+		const branches = await invoke<{ [key: string]: Branch[] }>("clone_repo", {link, path, name})
+		repositories.set({
+			...repos,
+			[name]: {
+				path: path,
+				branches: branches[path]
 			}
 		})
 		return branches

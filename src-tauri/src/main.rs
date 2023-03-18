@@ -18,6 +18,7 @@ mod commands;
 use crate::settings::{save_settings, load_settings};
 use crate::repositories::{save_repositories, load_repositories};
 use crate::git_command::get_branch;
+use crate::git_command::clone_repo;
 use crate::logging::{save_logging, load_logging};
 
 use dotenv_enum::{env_enum, EnvironmentVariable};
@@ -54,7 +55,8 @@ fn main() {
             load_repositories,
             get_branch,
             save_logging,
-            load_logging
+            load_logging,
+            clone_repo
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

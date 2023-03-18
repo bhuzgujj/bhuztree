@@ -24,3 +24,5 @@ You need to have:
 - [Rust](https://www.rust-lang.org/tools/install)
 - [Git](https://git-scm.com/downloads)
 - [Tauri](https://tauri.app/)
+
+*Notes: when running npm run dev, it will call tauri to launch in dev mode. This will generate the type from the backend*

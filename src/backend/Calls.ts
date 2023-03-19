@@ -28,10 +28,7 @@ export async function logging(message: any, debugLevel: DebugLevel = "Warning"):
 
 export async function loadSettings(): Promise<Settings | any> {
 	try {
-		const settings = await invoke<Settings>("load_settings", {})
-		language.set(settings.language)
-		debug.set(settings.debug_level)
-		return settings
+		return await invoke<Settings>("load_settings", {})
 	} catch (err) {
 		return Promise.reject(await logging(err, "Debug"))
 	}
@@ -47,9 +44,7 @@ export async function saveSettings(settings: Settings): Promise<any> {
 
 export async function loadRepositories(): Promise<Repositories | any> {
 	try {
-		const repos = await invoke<{ [key: string]: Repositories }>("load_repositories", {})
-		repositories.set(repos)
-		return repos
+		return await invoke<{ [key: string]: Repositories }>("load_repositories", {})
 	} catch (err) {
 		return Promise.reject(await logging(err, "Debug"))
 	}
@@ -79,9 +74,17 @@ export async function getBranch(path: string, repos: { [key: string]: Repositori
 	}
 }
 
-export async function cloneRepo(link: string, path: string, repos: Repositories, name: string) {
+export async function cloneRepo(link: string, path: string, repos: Repositories, name: string): Promise<{ [key: string]: BranchDetails[] }> {
 	try {
 		return await invoke<{ [key: string]: BranchDetails[] }>("clone_repo", {link, path, name})
+	} catch (err: any) {
+		return Promise.reject(await logging(err, "Warning"))
+	}
+}
+
+export async function addWorktree(name: string, path: string): Promise<any> {
+	try {
+		return await invoke<any>("add_worktree", {path, name})
 	} catch (err: any) {
 		return Promise.reject(await logging(err, "Warning"))
 	}

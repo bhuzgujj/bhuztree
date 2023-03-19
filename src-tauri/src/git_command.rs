@@ -45,7 +45,7 @@ pub fn clone_repo(link: String, path: String, name: String) -> Result<HashMap<St
 }
 
 #[tauri::command]
-pub fn add_branch(name: String, path: String) -> Result<HashMap<String, HashMap<String, BranchDetails>>, String> {
+pub fn add_worktree(name: String, path: String) -> Result<HashMap<String, HashMap<String, BranchDetails>>, String> {
     match send_to_git(GitCommand { command: "worktree".to_string(), args: vec!["add".to_string(), name] }, vec![PathBuf::from(path)]) {
         Ok(response) => Ok(parse_branches(&response)),
         Err(err) => Err(err.to_string()),

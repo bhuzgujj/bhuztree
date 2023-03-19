@@ -6,6 +6,7 @@
 	import type {Repositories} from "../../backend/types/Repositories"
 
 	export let repo: Repositories
+    let inAction = false
 
 	$: repos = $repositories
 
@@ -33,7 +34,7 @@
         <h2 class="underline">Branches:</h2>
         <table class="flex flex-col bg-5 rounded-md">
             {#each Object.keys(repo.branches) as name}
-                <BranchControl branch={repo.branches[name]} name={name}/>
+                <BranchControl branch={repo.branches[name]} name={name} path={repo.path} bind:inAction={inAction}/>
             {/each}
         </table>
     </div>

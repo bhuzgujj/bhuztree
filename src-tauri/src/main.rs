@@ -20,7 +20,7 @@ use crate::repositories::{save_repositories, load_repositories};
 use crate::logging::{save_logging, load_logging};
 use crate::git_command::get_branch;
 use crate::git_command::clone_repo;
-use crate::git_command::add_branch;
+use crate::git_command::add_worktree;
 
 use dotenv_enum::{env_enum, EnvironmentVariable};
 use tauri::{Manager};
@@ -58,7 +58,7 @@ fn main() {
             save_logging,
             load_logging,
             clone_repo,
-            add_branch
+            add_worktree
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

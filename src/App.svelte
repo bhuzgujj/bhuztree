@@ -11,7 +11,7 @@
 		try {
 			await loadSettings()
 			await loadRepositories()
-        } catch (err) {
+		} catch (err) {
 
 		}
 	}

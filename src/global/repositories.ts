@@ -1,14 +1,6 @@
 import {writable} from "svelte/store"
-import type {Branch} from "../backend/Branch.type"
-
-export type Repository = {
-	path: string,
-	selected_branch?: string,
-	branches: Branch[]
-}
-
-export type Repositories = { [key: string]: Repository }
+import type {Repositories} from "../backend/types/Repositories"
 
 export const selectedRepository = writable<string>("")
 
-export const repositories = writable<Repositories>({})
+export const repositories = writable<{ [key: string]: Repositories }>()

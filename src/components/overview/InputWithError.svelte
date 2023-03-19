@@ -6,7 +6,7 @@
 </script>
 
 {#if error}
-    <p class="text-red-700">{error}</p>
+    <p class="text-red-700 italic">{error}</p>
 {/if}
 <input bind:value={value} placeholder={placeholder} disabled={disabling}/>
 

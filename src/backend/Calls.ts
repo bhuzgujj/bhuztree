@@ -5,12 +5,13 @@ import {repositories} from "../global/repositories"
 import {language} from "../global/localizations"
 import {debug} from "../global/debug"
 
-import type {Repositories, Repository} from "../global/repositories"
-
-import type {Settings} from "./types/Settings"
-import type {Branch} from "./Branch.type"
 import {debugLevelToNumber} from "./DebugLevel.util"
+
+
+import type {Repositories} from "./types/Repositories"
+import type {Settings} from "./types/Settings"
 import type {DebugLevel} from "./types/DebugLevel"
+import type {BranchDetails} from "./types/BranchDetails"
 
 export async function logging(message: any, debugLevel: DebugLevel = "Warning"): Promise<any> {
 	if (debugLevelToNumber(get(debug)) <= debugLevelToNumber(debugLevel)) {
@@ -46,7 +47,7 @@ export async function saveSettings(settings: Settings): Promise<any> {
 
 export async function loadRepositories(): Promise<Repositories | any> {
 	try {
-		const repos = await invoke<Repositories>("load_repositories", {})
+		const repos = await invoke<{ [key: string]: Repositories }>("load_repositories", {})
 		repositories.set(repos)
 		return repos
 	} catch (err) {
@@ -54,7 +55,7 @@ export async function loadRepositories(): Promise<Repositories | any> {
 	}
 }
 
-export async function saveRepositories(repos: Repositories): Promise<Repositories | any> {
+export async function saveRepositories(repos:  { [key: string]: Repositories }): Promise<Repositories | any> {
 	try {
 		return await invoke<Repositories>("save_repositories", {cachedRepositories: repos})
 	} catch (err) {
@@ -62,15 +63,15 @@ export async function saveRepositories(repos: Repositories): Promise<Repositorie
 	}
 }
 
-export async function getBranch(path: string, repos: Repositories, name: string): Promise<{ [key: string]: Branch[] } | any> {
+export async function getBranch(path: string, repos: { [key: string]: Repositories }, name: string): Promise<{ [key: string]: Repositories[] } | any> {
 	try {
-		const branches = await invoke<{ [key: string]: Branch[] }>("get_branch", {paths: [path]})
+		const branches = await invoke<Repositories>("get_branch", {paths: [path]})
 		repositories.set({
 			...repos,
 			[name]: {
 				path: path,
 				branches: branches[path]
-			}
+			} as Repositories
 		})
 		return branches
 	} catch (err: any) {
@@ -80,7 +81,7 @@ export async function getBranch(path: string, repos: Repositories, name: string)
 
 export async function cloneRepo(link: string, path: string, repos: Repositories, name: string) {
 	try {
-		return await invoke<{ [key: string]: Branch[] }>("clone_repo", {link, path, name})
+		return await invoke<{ [key: string]: BranchDetails[] }>("clone_repo", {link, path, name})
 	} catch (err: any) {
 		return Promise.reject(await logging(err, "Warning"))
 	}

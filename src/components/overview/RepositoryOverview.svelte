@@ -1,10 +1,11 @@
 <script lang="ts">
 	import {repositories, selectedRepository} from "../../global/repositories"
-	import type {Repository} from "../../global/repositories"
 	import {saveRepositories} from "../../backend/Calls"
 	import CustomButton from "../CustomButton.svelte"
+	import BranchControl from "./BranchControl.svelte"
+	import type {Repositories} from "../../backend/types/Repositories"
 
-	export let repo: Repository
+	export let repo: Repositories
 
 	$: repos = $repositories
 
@@ -30,14 +31,10 @@
     </div>
     <div>
         <h2 class="underline">Branches:</h2>
-        <ul class="pl-3">
-            {#each repo.branches as branch}
-                {#if branch.is_current}
-                    <li class="text-red-700">{branch.name}</li>
-                {:else}
-                    <li>{branch.name}</li>
-                {/if}
+        <table class="flex flex-col bg-5 rounded-md">
+            {#each Object.keys(repo.branches) as name}
+                <BranchControl branch={repo.branches[name]} name={name}/>
             {/each}
-        </ul>
+        </table>
     </div>
 {/if}

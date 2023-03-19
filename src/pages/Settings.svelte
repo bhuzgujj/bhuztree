@@ -26,19 +26,19 @@
 		debug.set(previous.debug_level)
 	})
 
-	function save() {
-		saveSettings({
-			debug_level: $debug,
-			language: $language
-		})
-			.then(() => {
-				previous = {
-					language: $language,
-					debug_level: $debug
-				}
-				currentPage.set("home")
+	async function save(): Promise<void> {
+		try {
+			await saveSettings({
+				debug_level: $debug,
+				language: $language
 			})
-			.catch(logging)
+			previous = {
+				language: $language,
+				debug_level: $debug
+			}
+			currentPage.set("home")
+		} catch (err: any) {
+		}
 	}
 
 	function cancel() {

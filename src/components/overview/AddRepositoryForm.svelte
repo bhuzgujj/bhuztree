@@ -25,7 +25,7 @@
 		onsubmit().then((_) => saveRepositories($repositories))
 	}
 
-	async function getFolder() {
+	async function getFolder(): Promise<void> {
 		const folder = await open({
 			directory: true,
 			multiple: false

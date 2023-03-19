@@ -1,6 +1,6 @@
 import {writable} from "svelte/store"
-import type {Repositories} from "../backend/types/Repositories"
+import type {RepositoriesMap} from "../backend/Calls"
 
 export const selectedRepository = writable<string>("")
 
-export const repositories = writable<{ [key: string]: Repositories }>()
+export const repositories = writable<RepositoriesMap>()

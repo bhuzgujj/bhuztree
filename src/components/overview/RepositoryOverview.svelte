@@ -6,11 +6,11 @@
 	import type {Repositories} from "../../backend/types/Repositories"
 
 	export let repo: Repositories
-    let inAction = false
+    let inAction: boolean = false
 
 	$: repos = $repositories
 
-	async function deleteRepository(repository) {
+	async function deleteRepository(repository): Promise<void> {
 		delete repos[repository]
 		try {
 			await saveRepositories(repos)

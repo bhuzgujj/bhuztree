@@ -4,11 +4,12 @@
     import {cloneRepo, getBranch} from "../../backend/Calls"
     import {repositories} from "../../global/repositories";
     import {local} from "../../global/localizations.js";
+    import type {Repositories} from "../../backend/types/Repositories"
 
-    let formPath: string;
-    let formName: string;
-    let formLink: string;
-	let isLoading = false
+    let formPath: string | null;
+    let formName: string | null;
+    let formLink: string | null;
+	let isLoading: boolean = false
 
     $: nameError = !!$repositories[formName] ?
 	    alreadyExist(formName) :
@@ -22,15 +23,23 @@
 
     $: isValid = formPath && formName && formLink && !nameError && !pathError && !isLoading;
 
-    async function onSubmit() {
+    async function onSubmit(): Promise<void> {
 	    try {
 		    isLoading = true
-		    await cloneRepo(formLink, formPath, $repositories, formName)
-		    await getBranch(`${formPath}/${formName}`, $repositories, formName)
+		    await cloneRepo(formLink ?? "", formPath ?? "", formName ?? "")
+		    const repos = await getBranch(`${formPath}/${formName}`)
+            console.log(repos)
+		    repositories.set({
+			    ...$repositories,
+			    [formName]: {
+				    path: `${formPath}/${formName}`,
+				    branches: repos[`${formPath}/${formName}`]
+			    } as Repositories
+		    })
 		    formName= null;
 		    formPath= null;
 		    formLink= null;
-	    }  catch (e) {
+	    }  catch (err: any) {
 		    pathError = `No repository at ${formPath}`
 	    } finally {
 		    isLoading = false

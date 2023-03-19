@@ -9,7 +9,7 @@
 
 	$: loadingLabel = $local.common.loading
 
-	async function initialLoading() {
+	async function initialLoading(): Promise<void> {
 		try {
 			const settings = await loadSettings()
 			language.set(settings.language)
@@ -17,8 +17,7 @@
 
             const repos = await loadRepositories()
 			repositories.set(repos)
-		} catch (err) {
-
+		} catch (err: any) {
 		}
 	}
 </script>

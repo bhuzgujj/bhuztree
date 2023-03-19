@@ -69,7 +69,7 @@ fn parse_branches(stdouts: &HashMap<String, String>) -> HashMap<String, HashMap<
 
     map.iter().fold(HashMap::new(), |mut acc, entry| {
         acc.insert(entry.0.clone(), entry.1.iter().fold(HashMap::new(), |mut branch_acc, branch_entry| {
-            branch_acc.insert(branch_entry.0.clone(), branch_entry.1.clone());
+            branch_acc.insert(branch_entry.0.clone().replace("+ ", ""), branch_entry.1.clone());
             branch_acc
         }));
         acc

@@ -7,7 +7,7 @@
 	$: title = $local.components.overview.RepositorySelector.title
 	$: loadingLabel = $local.common.loading
 
-	function getBranches(branch) {
+	function getBranches(branch): void {
 		selectedRepository.set(branch)
 	}
 </script>

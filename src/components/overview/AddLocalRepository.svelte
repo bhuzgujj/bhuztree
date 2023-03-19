@@ -3,10 +3,11 @@
     import {getBranch} from "../../backend/Calls";
     import {repositories} from "../../global/repositories";
     import {local} from "../../global/localizations.js";
+    import type {Repositories} from "../../backend/types/Repositories"
 
-    let formPath: string;
-    let formName: string;
-    let isLoading = false
+    let formPath: string | null;
+    let formName: string | null;
+    let isLoading: boolean = false
 
 	$: nameError = !!$repositories[formName] ?
 	    alreadyExist(formName) :
@@ -20,13 +21,21 @@
 
     $: isValid = formPath && formName && !nameError && !pathError;
 
-    async function onSubmit() {
+    async function onSubmit(): Promise<void> {
         try {
 	        isLoading = true
-	        await getBranch(formPath, $repositories, formName)
+	        const repos = await getBranch(formPath ?? "")
+	        console.log(repos)
+	        repositories.set({
+		        ...$repositories,
+		        [formName]: {
+			        path: formPath,
+			        branches: repos[formPath]
+		        } as Repositories
+	        })
 	        formName= null;
 	        formPath= null;
-        }  catch (e) {
+        }  catch (err: any) {
 	        pathError = `No repository at ${formPath}`
         } finally {
 	        isLoading = false

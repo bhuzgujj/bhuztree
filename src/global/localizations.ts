@@ -25,4 +25,4 @@ language.subscribe((language: Language) => {
 	}
 })
 
-export const local = localization as Readable<Localization>
+export const local: Readable<Localization> = localization as Readable<Localization>

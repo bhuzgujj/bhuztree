@@ -1,32 +1,30 @@
 import {invoke} from "@tauri-apps/api/tauri"
 import {get} from "svelte/store"
 
-import {repositories} from "../global/repositories"
-import {language} from "../global/localizations"
 import {debug} from "../global/debug"
 
 import {debugLevelToNumber} from "./DebugLevel.util"
 
-
 import type {Repositories} from "./types/Repositories"
 import type {Settings} from "./types/Settings"
 import type {DebugLevel} from "./types/DebugLevel"
-import type {BranchDetails} from "./types/BranchDetails"
+
+export type RepositoriesMap = { [key: string]: Repositories }
 
 export async function logging(message: any, debugLevel: DebugLevel = "Warning"): Promise<any> {
 	if (debugLevelToNumber(get(debug)) <= debugLevelToNumber(debugLevel)) {
 		try {
 			await invoke("save_logging", {logs: message.toString(), debugLevel: debugLevel})
 			console.log(message)
-		} catch (err) {
+			return message
+		} catch (err: any) {
 			console.error(err)
-			return Promise.reject(err)
+			return err
 		}
 	}
-	return message
 }
 
-export async function loadSettings(): Promise<Settings | any> {
+export async function loadSettings(): Promise<Settings> {
 	try {
 		return await invoke<Settings>("load_settings", {})
 	} catch (err) {
@@ -42,15 +40,15 @@ export async function saveSettings(settings: Settings): Promise<any> {
 	}
 }
 
-export async function loadRepositories(): Promise<Repositories | any> {
+export async function loadRepositories(): Promise<RepositoriesMap> {
 	try {
-		return await invoke<{ [key: string]: Repositories }>("load_repositories", {})
+		return await invoke<RepositoriesMap>("load_repositories", {})
 	} catch (err) {
 		return Promise.reject(await logging(err, "Debug"))
 	}
 }
 
-export async function saveRepositories(repos:  { [key: string]: Repositories }): Promise<Repositories | any> {
+export async function saveRepositories(repos: RepositoriesMap): Promise<Repositories> {
 	try {
 		return await invoke<Repositories>("save_repositories", {cachedRepositories: repos})
 	} catch (err) {
@@ -58,33 +56,25 @@ export async function saveRepositories(repos:  { [key: string]: Repositories }):
 	}
 }
 
-export async function getBranch(path: string, repos: { [key: string]: Repositories }, name: string): Promise<{ [key: string]: Repositories[] } | any> {
+export async function getBranch(path: string): Promise<RepositoriesMap> {
 	try {
-		const branches = await invoke<Repositories>("get_branch", {paths: [path]})
-		repositories.set({
-			...repos,
-			[name]: {
-				path: path,
-				branches: branches[path]
-			} as Repositories
-		})
-		return branches
+		return await invoke<RepositoriesMap>("get_branch", {paths: [path]})
 	} catch (err: any) {
 		return Promise.reject(await logging(err, "Warning"))
 	}
 }
 
-export async function cloneRepo(link: string, path: string, repos: Repositories, name: string): Promise<{ [key: string]: BranchDetails[] }> {
+export async function cloneRepo(link: string, path: string, name: string): Promise<RepositoriesMap> {
 	try {
-		return await invoke<{ [key: string]: BranchDetails[] }>("clone_repo", {link, path, name})
+		return await invoke<RepositoriesMap>("clone_repo", {link, path, name})
 	} catch (err: any) {
 		return Promise.reject(await logging(err, "Warning"))
 	}
 }
 
-export async function addWorktree(name: string, path: string): Promise<any> {
+export async function addWorktree(name: string, path: string): Promise<RepositoriesMap> {
 	try {
-		return await invoke<any>("add_worktree", {path, name})
+		return await invoke<RepositoriesMap>("add_worktree", {path, name})
 	} catch (err: any) {
 		return Promise.reject(await logging(err, "Warning"))
 	}

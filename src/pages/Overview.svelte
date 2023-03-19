@@ -9,7 +9,7 @@
 	$: title = $local.pages.overview
 	$: repo = $repositories[$selectedRepository]
 
-	let subMenu = "repos"
+	let subMenu: string = "repos"
 </script>
 
 <div class="flex flex-col flex-grow">

@@ -8,7 +8,7 @@
 	export let path: string
     export let inAction: boolean
 
-    async function add() {
+    async function add(): Promise<void> {
 	    try {
 		    inAction = true
 		    await addWorktree(name, path)

@@ -16,18 +16,18 @@ export async function logging(message: any, debugLevel: DebugLevel = "Warning"):
 		try {
 			await invoke("save_logging", {logs: message.toString(), debugLevel: debugLevel})
 			console.log(message)
-			return message
 		} catch (err: any) {
 			console.error(err)
-			return err
+			throw new Error(err);
 		}
 	}
+	return message
 }
 
 export async function loadSettings(): Promise<Settings> {
 	try {
 		return await invoke<Settings>("load_settings", {})
-	} catch (err) {
+	} catch (err: any) {
 		return Promise.reject(await logging(err, "Debug"))
 	}
 }
@@ -35,7 +35,7 @@ export async function loadSettings(): Promise<Settings> {
 export async function saveSettings(settings: Settings): Promise<any> {
 	try {
 		return await invoke<any>("save_settings", {settings})
-	} catch (err) {
+	} catch (err: any) {
 		return Promise.reject(await logging(err, "Error"))
 	}
 }
@@ -43,15 +43,15 @@ export async function saveSettings(settings: Settings): Promise<any> {
 export async function loadRepositories(): Promise<RepositoriesMap> {
 	try {
 		return await invoke<RepositoriesMap>("load_repositories", {})
-	} catch (err) {
+	} catch (err: any) {
 		return Promise.reject(await logging(err, "Debug"))
 	}
 }
 
 export async function saveRepositories(repos: RepositoriesMap): Promise<Repositories> {
 	try {
-		return await invoke<Repositories>("save_repositories", {cachedRepositories: repos})
-	} catch (err) {
+		return await invoke<Repositories>("save_repositories", {repos})
+	} catch (err: any) {
 		return Promise.reject(await logging(err, "Error"))
 	}
 }

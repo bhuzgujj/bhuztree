@@ -17,10 +17,10 @@ pub struct Repositories {
 }
 
 #[tauri::command]
-pub fn save_repositories(cached_repositories: HashMap<String, Repositories>) -> Result<(), String> {
+pub fn save_repositories(repos: HashMap<String, Repositories>) -> Result<(), String> {
     let paths = vec![LocationsEnv::CacheFolder.unwrap_value()];
     remove_all_toml(paths.clone()).expect("Failed to remove");
-    cached_repositories.iter().for_each(|(file_name, repo)| {
+    repos.iter().for_each(|(file_name, repo)| {
         save_with_folders::<Repositories>(
             paths.clone(),
             vec![format!("{file_name}.toml")],

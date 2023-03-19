@@ -47,7 +47,7 @@
 </script>
 
 <div class="flex flex-col gap-2 flex-grow bg-3 rounded-md p-1">
-    <h1 class="pl-1">{settingsLabel}</h1>
+    <h1>{settingsLabel}</h1>
 
     <SettingsSection title={generalSectionLabel}>
         <DebugLevelPicker/>

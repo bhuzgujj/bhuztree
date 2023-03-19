@@ -1,6 +1,8 @@
 # Bhuztree
 Bhuztree is a git handler. There's a cli and desktop interface. It's a work in progress.
 
+WORK IN PROGRESS, THIS IS CURRENTLY NOT USABLE
+
 ## Installation
 ### Desktop
 TODO
@@ -13,9 +15,7 @@ TODO
 TODO
 
 ### CLI
-```shell
-bhuztree --help
-```
+TODO
 
 ## Contributing
 ### Setup

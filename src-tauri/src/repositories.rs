@@ -12,8 +12,22 @@ use ts_rs::TS;
 #[ts(export, export_to = "../src/backend/types/")]
 pub struct Repositories {
     pub path: String,
-    pub selected_branch: Option<String>,
+    pub worktrees_path: Option<String>,
     pub branches: HashMap<String, BranchDetails>,
+}
+
+impl Repositories {
+    pub fn from_entry(entry: (String, Vec<(String, BranchDetails)>)) -> Self {
+        Self {
+            path: entry.0.clone(),
+            worktrees_path: None,
+            branches: entry.1.clone().iter()
+                .fold(HashMap::new(), |mut acc, entity| {
+                    acc.insert(entity.0.clone(), entity.1.clone());
+                    acc
+                }),
+        }
+    }
 }
 
 #[tauri::command]

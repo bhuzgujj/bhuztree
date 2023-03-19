@@ -1,7 +1,7 @@
 <script lang="ts">
     import AddRepositoryForm from "./AddRepositoryForm.svelte";
     import InputWithError from "./InputWithError.svelte";
-    import {cloneRepo, getBranch} from "../../backend/Calls"
+    import {cloneRepo, getBranch, saveRepositories} from "../../backend/Calls"
     import {repositories} from "../../global/repositories";
     import {local} from "../../global/localizations.js";
     import type {Repositories} from "../../backend/types/Repositories"
@@ -27,15 +27,16 @@
 	    try {
 		    isLoading = true
 		    await cloneRepo(formLink ?? "", formPath ?? "", formName ?? "")
-		    const repos = await getBranch(`${formPath}/${formName}`)
-            console.log(repos)
-		    repositories.set({
+		    const repos = await getBranch(formName ?? "")
+            repositories.set({
 			    ...$repositories,
-			    [formName]: {
-				    path: `${formPath}/${formName}`,
-				    branches: repos[`${formPath}/${formName}`]
-			    } as Repositories
+                [formName]: {
+	                path: repos[formName].path,
+                    worktrees_path: `${formPath}\\${formName}`,
+                    branches: repos[formName].branches
+                } as Repositories
 		    })
+            await saveRepositories($repositories)
 		    formName= null;
 		    formPath= null;
 		    formLink= null;

@@ -58,7 +58,7 @@ export async function saveRepositories(repos: RepositoriesMap): Promise<Reposito
 
 export async function getBranch(path: string): Promise<RepositoriesMap> {
 	try {
-		return await invoke<RepositoriesMap>("get_branch", {paths: [path]})
+		return await invoke<RepositoriesMap>("get_branch", {name: path})
 	} catch (err: any) {
 		return Promise.reject(await logging(err, "Warning"))
 	}
@@ -72,9 +72,9 @@ export async function cloneRepo(link: string, path: string, name: string): Promi
 	}
 }
 
-export async function addWorktree(name: string, path: string): Promise<RepositoriesMap> {
+export async function addWorktree(name: string, path: string, repo: Repositories): Promise<RepositoriesMap> {
 	try {
-		return await invoke<RepositoriesMap>("add_worktree", {path, name})
+		return await invoke<RepositoriesMap>("add_worktree", {repo, path, name})
 	} catch (err: any) {
 		return Promise.reject(await logging(err, "Warning"))
 	}

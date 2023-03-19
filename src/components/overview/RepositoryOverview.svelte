@@ -1,36 +1,26 @@
 <script lang="ts">
-	import {repositories, selectedRepository} from "../../global/repositories"
-	import {saveRepositories} from "../../backend/Calls"
-	import CustomButton from "../CustomButton.svelte"
-	import BranchControl from "./BranchControl.svelte"
-	import type {Repositories} from "../../backend/types/Repositories"
+    import RepositorySelector from "./RepositorySelector.svelte";
+    import RepositoryBranches from "./RepositoryBranches.svelte";
+    import {local} from "../../global/localizations.js";
+    import type {Repositories} from "../../backend/types/Repositories"
 
-	export let repo: Repositories
-    let inAction: boolean = false
+    export let repo: Repositories
 
-	$: repos = $repositories
-
-	async function remove(repository): Promise<void> {
-		delete repos[repository]
-		try {
-			await saveRepositories(repos)
-			repositories.set(repos)
-		} catch (err) {
-
-		}
-	}
+    $: title = $local.pages.overview
 </script>
 
-<h1>{$selectedRepository}</h1>
-<div class="flex flex-row">
-    <CustomButton styles="clickable-cancel" onclick={() => {remove($selectedRepository)}}>Remove</CustomButton>
-    <CustomButton styles="clickable-cancel" onclick={() => {remove($selectedRepository)}}>Delete</CustomButton>
-</div>
-<div>
-    <h2 class="underline">Branches:</h2>
-    <table class="flex flex-col bg-5 rounded-md">
-        {#each Object.keys(repo.branches) as name}
-            <BranchControl branch={repo.branches[name]} name={name} path={repo.path} bind:inAction={inAction}/>
-        {/each}
-    </table>
+<RepositorySelector/>
+<div class="flex flex-grow mt-1">
+    {#if !repo?.branches}
+        <div class="flex-grow rounded-md p-1 bg-3">
+            <h1>Select a repo</h1>
+        </div>
+    {:else}
+        <div class="flex-grow basis-1/2 rounded-md p-1 bg-3 mr-1">
+            <RepositoryBranches bind:repo={repo}/>
+        </div>
+        <div class="flex-grow basis-1/2 rounded-md p-1 bg-3">
+            <h1>{title}</h1>
+        </div>
+    {/if}
 </div>

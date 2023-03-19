@@ -4,7 +4,7 @@
 	import CustomButton from "../components/CustomButton.svelte"
 	import AddDistantRepository from "../components/overview/AddDistantRepository.svelte"
 	import AddLocalRepository from "../components/overview/AddLocalRepository.svelte"
-	import RepositoryDetails from "../components/overview/RepositoryDetails.svelte"
+	import RepositoryOverview from "../components/overview/RepositoryOverview.svelte"
 
 	$: title = $local.pages.overview
 	$: repo = $repositories[$selectedRepository]
@@ -27,7 +27,7 @@
         </div>
     </div>
     {#if subMenu === "repos"}
-        <RepositoryDetails repo={repo}/>
+        <RepositoryOverview repo={repo}/>
     {:else if subMenu === "addlocal"}
         <AddLocalRepository/>
     {:else if subMenu === "adddistant"}

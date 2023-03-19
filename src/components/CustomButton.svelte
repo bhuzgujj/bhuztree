@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {ButtonStyle, ButtonType} from "../global/button.type"
+	import type {ButtonType} from "../global/button.type"
 
 	export let onclick: () => void = () => {}
 	export let selected: boolean = false
@@ -10,11 +10,3 @@
 <button on:click={onclick} class="rounded-md px-5 h-full {styles}" disabled={selected} type={type}>
     <slot/>
 </button>
-
-<style>
-	button:disabled {
-		background-color: #222;
-        color: #444;
-        border: #0000 2px solid;
-	}
-</style>

@@ -16,6 +16,10 @@ h1 {
 	margin-bottom: 0.25rem;
 }
 
+h2 {
+	padding: 0.25rem;
+}
+
 button:active:enabled {
 	transform: scale(0.95);
 }

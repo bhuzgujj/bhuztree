@@ -15,13 +15,13 @@
 <div class="flex flex-col flex-grow">
     <div class="bg-3 rounded-md p-1 mb-1 flex flex-col items-center">
         <div class="mr-2">
-            <CustomButton styles="save" onclick={() => {subMenu = "addlocal"}} selected={subMenu === "addlocal"}>
+            <CustomButton styles="clickable-save" onclick={() => {subMenu = "addlocal"}} selected={subMenu === "addlocal"}>
                 Add local repos
             </CustomButton>
-            <CustomButton styles="save" onclick={() => {subMenu = "adddistant"}} selected={subMenu === "adddistant"}>
+            <CustomButton styles="clickable-save" onclick={() => {subMenu = "adddistant"}} selected={subMenu === "adddistant"}>
                 Add distant repos
             </CustomButton>
-            <CustomButton styles="info" onclick={() => {subMenu = "repos"}} selected={subMenu === "repos"}>
+            <CustomButton styles="clickable-info" onclick={() => {subMenu = "repos"}} selected={subMenu === "repos"}>
                 Local repos
             </CustomButton>
         </div>

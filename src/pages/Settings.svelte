@@ -55,7 +55,7 @@
     </SettingsSection>
 
     <div class="mt-1 flex justify-between items-stretch">
-        <CustomButton styles="save" onclick={save}>{saveLabel}</CustomButton>
-        <CustomButton styles="cancel" onclick={cancel}>{cancelLabel}</CustomButton>
+        <CustomButton styles="clickable-save" onclick={save}>{saveLabel}</CustomButton>
+        <CustomButton styles="clickable-cancel" onclick={cancel}>{cancelLabel}</CustomButton>
     </div>
 </div>

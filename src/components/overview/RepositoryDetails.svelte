@@ -11,10 +11,16 @@
 
 <RepositorySelector/>
 <div class="flex flex-grow mt-1">
-    <div class="flex-grow basis-1/2 rounded-md p-1 bg-3 mr-1">
-        <RepositoryOverview bind:repo={repo}/>
-    </div>
-    <div class="flex-grow basis-1/2 rounded-md p-1 bg-3">
-        <h1>{title}</h1>
-    </div>
+    {#if !repo?.branches}
+        <div class="flex-grow rounded-md p-1 bg-3">
+            <h1>Select a repo</h1>
+        </div>
+    {:else}
+        <div class="flex-grow basis-1/2 rounded-md p-1 bg-3 mr-1">
+            <RepositoryOverview bind:repo={repo}/>
+        </div>
+        <div class="flex-grow basis-1/2 rounded-md p-1 bg-3">
+            <h1>{title}</h1>
+        </div>
+    {/if}
 </div>

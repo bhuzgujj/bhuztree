@@ -52,7 +52,7 @@
                 </div>
             </div>
             <slot/>
-            <CustomButton type="submit" styles="save" selected={!isValid}>
+            <CustomButton type="submit" styles="clickable-save" selected={!isValid}>
                 {addRepository}
             </CustomButton>
         </form>

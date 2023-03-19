@@ -10,7 +10,7 @@
 
 	$: repos = $repositories
 
-	async function deleteRepository(repository): Promise<void> {
+	async function remove(repository): Promise<void> {
 		delete repos[repository]
 		try {
 			await saveRepositories(repos)
@@ -21,21 +21,16 @@
 	}
 </script>
 
-{#if !repo?.branches}
-    <div>
-        <h1>Select a repo</h1>
-    </div>
-{:else}
-    <h1>{$selectedRepository}</h1>
-    <div class="flex flex-row">
-        <CustomButton styles="cancel" onclick={() => {deleteRepository($selectedRepository)}}>Delete</CustomButton>
-    </div>
-    <div>
-        <h2 class="underline">Branches:</h2>
-        <table class="flex flex-col bg-5 rounded-md">
-            {#each Object.keys(repo.branches) as name}
-                <BranchControl branch={repo.branches[name]} name={name} path={repo.path} bind:inAction={inAction}/>
-            {/each}
-        </table>
-    </div>
-{/if}
+<h1>{$selectedRepository}</h1>
+<div class="flex flex-row">
+    <CustomButton styles="clickable-cancel" onclick={() => {remove($selectedRepository)}}>Remove</CustomButton>
+    <CustomButton styles="clickable-cancel" onclick={() => {remove($selectedRepository)}}>Delete</CustomButton>
+</div>
+<div>
+    <h2 class="underline">Branches:</h2>
+    <table class="flex flex-col bg-5 rounded-md">
+        {#each Object.keys(repo.branches) as name}
+            <BranchControl branch={repo.branches[name]} name={name} path={repo.path} bind:inAction={inAction}/>
+        {/each}
+    </table>
+</div>

@@ -3,7 +3,7 @@
 </script>
 
 <div class="bg-4 rounded-md p-1">
-    <h2 class="p-1">{title}</h2>
+    <h2>{title}</h2>
     <table class="flex flex-col bg-5 rounded-md">
         <slot/>
     </table>
